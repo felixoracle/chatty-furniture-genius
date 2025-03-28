@@ -32,7 +32,7 @@ const ChatHeader = ({ onReset, onChangeApiKey }: ChatHeaderProps) => {
         />
         <div>
           <h2 className="font-medium">Pity</h2>
-          <p className="text-xs text-muted-foreground">Your Furniture Assistant</p>
+          <p className="text-xs text-muted-foreground">Tu asistente para compra de muebles</p>
         </div>
       </div>
       
@@ -58,19 +58,19 @@ const ChatHeader = ({ onReset, onChangeApiKey }: ChatHeaderProps) => {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Reset Conversation</AlertDialogTitle>
+              <AlertDialogTitle>Reiniciar conversación</AlertDialogTitle>
               <AlertDialogDescription>
-                This will clear the current conversation history and product suggestions. 
-                Are you sure you want to start over?
+                Esto borra el historial actual y el contexto de la conversación. 
+                ¿Seguro que deseas reiniciar?
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
               <AlertDialogAction onClick={() => {
                 onReset();
                 setIsAlertOpen(false);
               }}>
-                Reset
+                Reiniciar
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

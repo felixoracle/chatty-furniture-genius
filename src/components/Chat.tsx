@@ -160,7 +160,7 @@ const Chat = () => {
           <img 
             src="/lovable-uploads/ad4e2b94-a5d9-4d13-9400-a076a9a18670.png" 
             alt="Logo de Pity" 
-            className="h-12 mb-4" 
+            className="h-16 mb-4" 
           />
           <h1 className="text-2xl font-bold mb-2">Interactúa con Pity</h1>
           <p className="text-muted-foreground max-w-md">

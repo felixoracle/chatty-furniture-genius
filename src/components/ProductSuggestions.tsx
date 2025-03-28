@@ -15,7 +15,7 @@ const ProductSuggestions = ({ products, onRequestNewSuggestions }: ProductSugges
   return (
     <div className="p-4 border border-border rounded-lg bg-card/50 mb-4">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-medium">Furniture Suggestions</h3>
+        <h3 className="text-lg font-medium">Sugerencias de Muebles</h3>
         <div className="flex gap-2">
           <Button 
             variant="outline" 
@@ -24,7 +24,7 @@ const ProductSuggestions = ({ products, onRequestNewSuggestions }: ProductSugges
             onClick={onRequestNewSuggestions}
           >
             <RefreshCw size={14} />
-            <span>New Ideas</span>
+            <span>Explorar nuevas ideas</span>
           </Button>
         </div>
       </div>
