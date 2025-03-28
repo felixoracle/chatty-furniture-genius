@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/08f4e1ee-16f9-4361-82d9-0472f3b831b8
+**URL**: https://chatty-furniture-genius.lovable.app/
 
 ## How can I edit this code?
 
