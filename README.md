@@ -1,8 +1,12 @@
 # Welcome to your FURNITURE ASSISTANT project
 
-## Project info
+## TEST MVP using this URL
 
 **URL**: https://chatty-furniture-genius.lovable.app/
+
+## Where can I find more info about this solution?
+
+Please read the Propuesta.pdf file where you can find the problem analysis and the proposal to let the users find the right products for their real needs (even if they don't know exactly what they want)
 
 ## How can I edit this code?
 
