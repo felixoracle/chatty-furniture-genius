@@ -162,7 +162,7 @@ const Chat = () => {
             alt="Logo de Pity" 
             className="h-12 mb-4" 
           />
-          <h1 className="text-2xl font-bold mb-2">Bienvenido a Pity</h1>
+          <h1 className="text-2xl font-bold mb-2">Interactúa con Pity</h1>
           <p className="text-muted-foreground max-w-md">
             Tu asistente conversacional de muebles que te ayuda a encontrar las piezas perfectas para tu espacio.
           </p>

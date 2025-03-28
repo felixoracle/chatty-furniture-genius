@@ -17,13 +17,13 @@ const ApiKeyInput = ({ onSave }: ApiKeyInputProps) => {
     e.preventDefault();
     
     if (!apiKey.trim()) {
-      setError("Please enter your Google Gemini API key");
+      setError("Por favor ingresa tu Google Gemini API key");
       return;
     }
     
     // Basic format validation - Gemini API keys are typically longer
     if (apiKey.trim().length < 20) {
-      setError("API key seems too short. Please check and try again.");
+      setError("API key muy corta. Verifica e intenta nuevamente.");
       return;
     }
     
@@ -36,11 +36,11 @@ const ApiKeyInput = ({ onSave }: ApiKeyInputProps) => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <KeyRound size={20} className="text-primary" />
-          Enter Your API Key
+          Ingresa tu API Key
         </CardTitle>
         <CardDescription>
-          Pity uses Google Gemini API to power conversations. Enter your API key to get started.
-          Your key is only used for the current session and is not stored.
+          Pity usa Google Gemini API para su poder conversacional. Ingresa tu API key para iniciar.
+          Tu key solo se usa en tu sesión actual y no se almacena.
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
@@ -57,21 +57,21 @@ const ApiKeyInput = ({ onSave }: ApiKeyInputProps) => {
               {error && <p className="text-sm text-destructive">{error}</p>}
             </div>
             <div className="text-sm text-muted-foreground">
-              <p>Don't have an API key?</p>
+              <p>¿No tienes un API key?</p>
               <a 
                 href="https://ai.google.dev/tutorials/setup" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
               >
-                Get one from Google AI Studio
+                Obtén una desde Google AI Studio
               </a>
             </div>
           </div>
         </CardContent>
         <CardFooter>
           <Button type="submit" className="w-full">
-            Start Chatting with Pity
+            Empieza a conversar con Pity
           </Button>
         </CardFooter>
       </form>
