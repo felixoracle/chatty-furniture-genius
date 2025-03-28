@@ -3,20 +3,20 @@ import { Message } from "../types/chat";
 
 // Define the system prompt that shapes Pity's behavior
 const SYSTEM_PROMPT = `
-You are Pity, a friendly, helpful, and knowledgeable furniture assistant AI.
-Your task is to help users discover and refine ideas for furniture through a text-based conversation.
-Ask clarifying questions about their furniture needs including style, type, size, material, color, room, and budget.
-Once you have gathered sufficient details, generate 3-5 fictional furniture product suggestions that match their criteria.
+Eres Pity, un asistente virtual amigable, útil y conocedor de muebles.
+Tu tarea es ayudar a los usuarios a descubrir y refinar ideas para muebles a través de una conversación de texto.
+Haz preguntas aclaratorias sobre sus necesidades de muebles, incluyendo estilo, tipo, tamaño, material, color, habitación y presupuesto.
+Una vez que hayas recopilado suficientes detalles, genera de 3 a 5 sugerencias ficticias de productos de muebles que coincidan con sus criterios.
 
-Each product suggestion should include:
-- Title: A plausible product name
-- Price: A realistic price with currency symbol
-- Description: 1-2 sentences highlighting key features
-- Categories/Tags: Relevant tags reflecting the criteria discussed
+Cada sugerencia de producto debe incluir:
+- Título: Un nombre plausible de producto
+- Precio: Un precio realista con símbolo de moneda
+- Descripción: 1-2 oraciones destacando características clave
+- Categorías/Etiquetas: Etiquetas relevantes que reflejen los criterios discutidos
 
-Be patient, inquisitive, clear, and focused on furniture details.
-Always act as if you're a furniture expert, but keep your responses conversational and friendly.
-DO NOT generate or reference any images.
+Sé paciente, inquisitivo, claro y enfocado en los detalles de los muebles.
+Siempre actúa como si fueras un experto en muebles, pero mantén tus respuestas conversacionales y amigables.
+NO generes ni hagas referencia a ninguna imagen.
 `;
 
 export async function sendMessageToGemini(
@@ -25,23 +25,28 @@ export async function sendMessageToGemini(
   shouldGenerateProducts: boolean = false
 ): Promise<{ text: string; products: any[] }> {
   if (!apiKey) {
-    throw new Error("API key is required");
+    throw new Error("La clave API es requerida");
   }
 
   try {
-    // Format messages for Gemini API
+    // Format messages for Gemini API - Fix the content/parts structure
     const formattedMessages = [
       {
-        role: "system",
-        content: shouldGenerateProducts 
-          ? `${SYSTEM_PROMPT}\n\nNow it's time to generate product suggestions based on the conversation. Present 3-5 fictional furniture products that match the user's criteria. Format them clearly with Title, Price, Description, and Categories/Tags.`
+        role: "user",
+        parts: [{ text: shouldGenerateProducts 
+          ? `${SYSTEM_PROMPT}\n\nAhora es el momento de generar sugerencias de productos basadas en la conversación. Presenta de 3 a 5 productos de muebles ficticios que coincidan con los criterios del usuario. Formátalos claramente con Título, Precio, Descripción y Categorías/Etiquetas.`
           : SYSTEM_PROMPT
-      },
-      ...messages.map(message => ({
-        role: message.role,
-        content: message.content
-      }))
+        }]
+      }
     ];
+    
+    // Add conversation messages with correct format
+    messages.forEach(message => {
+      formattedMessages.push({
+        role: message.role,
+        parts: [{ text: message.content }]
+      });
+    });
 
     // Make API request to Google Gemini API
     const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent", {
@@ -63,7 +68,7 @@ export async function sendMessageToGemini(
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(`Gemini API error: ${errorData.error?.message || 'Unknown error'}`);
+      throw new Error(`Error de API Gemini: ${errorData.error?.message || 'Error desconocido'}`);
     }
 
     const data = await response.json();
@@ -80,7 +85,7 @@ export async function sendMessageToGemini(
       products 
     };
   } catch (error) {
-    console.error("Error sending message to Gemini:", error);
+    console.error("Error enviando mensaje a Gemini:", error);
     throw error;
   }
 }
@@ -91,23 +96,23 @@ function extractProductsFromText(text: string): any[] {
   
   // Look for product blocks in the text
   // This is a basic implementation that can be improved
-  const productBlocks = text.split(/Product \d+:|Suggestion \d+:|Option \d+:/).filter(block => block.trim().length > 0);
+  const productBlocks = text.split(/Producto \d+:|Sugerencia \d+:|Opción \d+:/).filter(block => block.trim().length > 0);
   
   productBlocks.forEach((block, index) => {
     // Extract title
-    const titleMatch = block.match(/Title:?\s*([^\n]+)/i);
-    const title = titleMatch ? titleMatch[1].trim() : `Furniture Option ${index + 1}`;
+    const titleMatch = block.match(/Título:?\s*([^\n]+)/i);
+    const title = titleMatch ? titleMatch[1].trim() : `Opción de Mueble ${index + 1}`;
     
     // Extract price
-    const priceMatch = block.match(/Price:?\s*([^\n]+)/i);
-    const price = priceMatch ? priceMatch[1].trim() : "Price unavailable";
+    const priceMatch = block.match(/Precio:?\s*([^\n]+)/i);
+    const price = priceMatch ? priceMatch[1].trim() : "Precio no disponible";
     
     // Extract description
-    const descMatch = block.match(/Description:?\s*([^\n]+(\n[^\n]+)*)/i);
-    const description = descMatch ? descMatch[1].trim() : "No description available";
+    const descMatch = block.match(/Descripción:?\s*([^\n]+(\n[^\n]+)*)/i);
+    const description = descMatch ? descMatch[1].trim() : "Sin descripción disponible";
     
     // Extract categories
-    const categoriesMatch = block.match(/Categories\/Tags:?\s*([^\n]+(\n[^\n]+)*)/i);
+    const categoriesMatch = block.match(/Categorías\/Etiquetas:?\s*([^\n]+(\n[^\n]+)*)/i);
     let categories: string[] = [];
     
     if (categoriesMatch) {
@@ -129,7 +134,7 @@ function extractProductsFromText(text: string): any[] {
       title,
       price,
       description,
-      categories: categories.length > 0 ? categories : ["Furniture"]
+      categories: categories.length > 0 ? categories : ["Mueble"]
     });
   });
   
@@ -138,21 +143,21 @@ function extractProductsFromText(text: string): any[] {
     // Try to intelligently parse the text
     const lines = text.split('\n').filter(line => line.trim().length > 0);
     
-    let title = "Furniture Suggestion";
-    let price = "Price unavailable";
+    let title = "Sugerencia de Mueble";
+    let price = "Precio no disponible";
     let description = text.trim();
-    let categories = ["Furniture"];
+    let categories = ["Mueble"];
     
     // Try to extract information from the lines
     lines.forEach(line => {
-      if (line.toLowerCase().includes("title:")) {
-        title = line.split("title:")[1].trim();
-      } else if (line.toLowerCase().includes("price:")) {
-        price = line.split("price:")[1].trim();
-      } else if (line.toLowerCase().includes("description:")) {
-        description = line.split("description:")[1].trim();
-      } else if (line.toLowerCase().includes("categories:") || line.toLowerCase().includes("tags:")) {
-        const categoryText = line.split(/categories:|tags:/i)[1].trim();
+      if (line.toLowerCase().includes("título:")) {
+        title = line.split("título:")[1].trim();
+      } else if (line.toLowerCase().includes("precio:")) {
+        price = line.split("precio:")[1].trim();
+      } else if (line.toLowerCase().includes("descripción:")) {
+        description = line.split("descripción:")[1].trim();
+      } else if (line.toLowerCase().includes("categorías:") || line.toLowerCase().includes("etiquetas:")) {
+        const categoryText = line.split(/categorías:|etiquetas:/i)[1].trim();
         categories = categoryText.split(/,\s*/);
       }
     });

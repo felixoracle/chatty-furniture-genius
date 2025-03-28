@@ -32,7 +32,7 @@ const Chat = () => {
       const initialGreeting: Message = {
         id: `msg-${Date.now()}`,
         role: "assistant",
-        content: "Hi there! I'm Pity, your friendly furniture assistant. What kind of furniture are you looking for today? I can help you find the perfect piece for your space.",
+        content: "¡Hola! Soy Pity, tu asistente de muebles. ¿Qué tipo de mueble estás buscando hoy? Puedo ayudarte a encontrar la pieza perfecta para tu espacio.",
         timestamp: new Date(),
       };
       setMessages([initialGreeting]);
@@ -79,10 +79,10 @@ const Chat = () => {
         setProducts(response.products);
       }
     } catch (error) {
-      console.error("Error in conversation:", error);
+      console.error("Error en la conversación:", error);
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to get a response. Please try again.",
+        description: error instanceof Error ? error.message : "No se pudo obtener una respuesta. Por favor, inténtalo de nuevo.",
         variant: "destructive",
       });
     } finally {
@@ -106,22 +106,22 @@ const Chat = () => {
         const assistantMessage: Message = {
           id: `msg-${Date.now()}-assistant`,
           role: "assistant",
-          content: "I've found some new furniture suggestions for you based on our conversation. Take a look!",
+          content: "He encontrado algunas nuevas sugerencias de muebles para ti basadas en nuestra conversación. ¡Échales un vistazo!",
           timestamp: new Date(),
         };
         
         setMessages(prev => [...prev, assistantMessage]);
       } else {
         toast({
-          title: "No Suggestions",
-          description: "I couldn't generate new suggestions. Let's continue our conversation to refine your preferences.",
+          title: "Sin Sugerencias",
+          description: "No pude generar nuevas sugerencias. Continuemos nuestra conversación para refinar tus preferencias.",
         });
       }
     } catch (error) {
-      console.error("Error generating new suggestions:", error);
+      console.error("Error generando nuevas sugerencias:", error);
       toast({
         title: "Error",
-        description: "Failed to generate new suggestions. Please try again.",
+        description: "No se pudieron generar nuevas sugerencias. Por favor, inténtalo de nuevo.",
         variant: "destructive",
       });
     } finally {
@@ -139,7 +139,7 @@ const Chat = () => {
       const initialGreeting: Message = {
         id: `msg-${Date.now()}`,
         role: "assistant",
-        content: "Hi there! I'm Pity, your friendly furniture assistant. What kind of furniture are you looking for today? I can help you find the perfect piece for your space.",
+        content: "¡Hola! Soy Pity, tu asistente de muebles. ¿Qué tipo de mueble estás buscando hoy? Puedo ayudarte a encontrar la pieza perfecta para tu espacio.",
         timestamp: new Date(),
       };
       setMessages([initialGreeting]);
@@ -159,12 +159,12 @@ const Chat = () => {
         <div className="mb-8 flex flex-col items-center text-center">
           <img 
             src="/lovable-uploads/ad4e2b94-a5d9-4d13-9400-a076a9a18670.png" 
-            alt="Pity Logo" 
+            alt="Logo de Pity" 
             className="h-12 mb-4" 
           />
-          <h1 className="text-2xl font-bold mb-2">Welcome to Pity</h1>
+          <h1 className="text-2xl font-bold mb-2">Bienvenido a Pity</h1>
           <p className="text-muted-foreground max-w-md">
-            Your conversational furniture assistant that helps you find the perfect pieces for your space.
+            Tu asistente conversacional de muebles que te ayuda a encontrar las piezas perfectas para tu espacio.
           </p>
         </div>
         <ApiKeyInput onSave={setApiKey} />

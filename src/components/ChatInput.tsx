@@ -48,7 +48,7 @@ const ChatInput = ({ onSendMessage, isTyping }: ChatInputProps) => {
     <form onSubmit={handleSendMessage} className="flex items-end gap-2 p-2">
       <Textarea
         ref={textareaRef}
-        placeholder="Ask Pity about furniture..."
+        placeholder="Pregunta a Pity sobre muebles..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={handleKeyDown}

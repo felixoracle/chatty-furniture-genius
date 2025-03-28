@@ -2,6 +2,7 @@
 import { Message } from "@/types/chat";
 import { Avatar } from "@/components/ui/avatar";
 import { formatDistance } from "date-fns";
+import { es } from "date-fns/locale";
 
 interface MessageBubbleProps {
   message: Message;
@@ -9,7 +10,10 @@ interface MessageBubbleProps {
 
 const MessageBubble = ({ message }: MessageBubbleProps) => {
   const isUser = message.role === "user";
-  const formattedTime = formatDistance(message.timestamp, new Date(), { addSuffix: true });
+  const formattedTime = formatDistance(message.timestamp, new Date(), { 
+    addSuffix: true,
+    locale: es
+  });
 
   return (
     <div className={`flex items-start gap-2 mb-4 ${isUser ? "flex-row-reverse" : ""}`}>
