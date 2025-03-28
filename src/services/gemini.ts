@@ -1,4 +1,3 @@
-
 import { Message } from "../types/chat";
 
 // Define the system prompt that shapes Pity's behavior
@@ -48,8 +47,8 @@ export async function sendMessageToGemini(
       });
     });
 
-    // Make API request to Google Gemini API
-    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent", {
+    // Make API request to Google Gemini API - Change from gemini-pro to gemini-2.0-flash
+    const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
